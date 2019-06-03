@@ -7,6 +7,7 @@ using Bondora.BLL.Services;
 using Bondora.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 
 namespace Bondora.BLL.Controllers
@@ -17,9 +18,10 @@ namespace Bondora.BLL.Controllers
     public class BondoraController : ControllerBase
     {
         private IManagerRepository _manager;
-
-        public BondoraController(IManagerRepository manager)
+        private static ILogger<BondoraController> logger;
+        public BondoraController(IManagerRepository manager, ILogger<BondoraController> _logger)
         {
+            _logger = logger;
             _manager = manager;
         }
 
@@ -34,7 +36,7 @@ namespace Bondora.BLL.Controllers
             }
             catch (Exception ex)
             {
-
+                logger.LogError("Get Product Action" + ex.Message);
             }
 
             return BadRequest();
@@ -46,7 +48,6 @@ namespace Bondora.BLL.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest();
-
             }
 
             try
@@ -56,14 +57,14 @@ namespace Bondora.BLL.Controllers
             }
             catch (Exception ex)
             {
-
+                logger.LogError("GetInvoice Action" + ex.Message);
             }
 
             return BadRequest();
         }
 
         [HttpPost]
-        public IActionResult AddRent([FromBody] JObject data)
+        public IActionResult AddRent([FromBody] RentedInfo data)
         {
             if (!ModelState.IsValid)
             {
@@ -72,13 +73,12 @@ namespace Bondora.BLL.Controllers
 
             try
             {
-                var info = data.ToObject<dynamic>();
-                _manager.AddRent((long)info.CustomerId, (CustomerInfo)info.RentedData);
-                return Ok();
+               var IsAdded= _manager.AddRent(data.CustomerId, data.RentedData);
+                return Ok(IsAdded);
             }
             catch (Exception ex)
             {
-                
+                logger.LogError("AddRent Action" + ex.Message);
             }
 
             return BadRequest();

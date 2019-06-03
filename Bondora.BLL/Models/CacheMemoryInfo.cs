@@ -11,12 +11,12 @@ namespace Bondora.BLL.Models
         public CacheMemoryInfo()
         {
             RentItems = new List<RentItems>();
-            CustomerData = new Dictionary<long,List<CustomerInfo>>();
+            CustomerData = new Dictionary<long,List<CustomerRentInfo>>();
         }
 
         public List<RentItems> RentItems { get; set; }
 
-        public Dictionary<long,List<CustomerInfo>> CustomerData { get; set; }
+        public Dictionary<long,List<CustomerRentInfo>> CustomerData { get; set; }
 
     }
 }

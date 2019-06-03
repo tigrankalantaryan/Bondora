@@ -1,10 +1,7 @@
-﻿using Bondora.BLL.Services;
-using Bondora.Models;
+﻿using Bondora.Models;
 using Microsoft.Extensions.Caching.Memory;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Bondora.BLL.Models
 {
@@ -29,17 +26,17 @@ namespace Bondora.BLL.Models
              };
 
             _cache.Set("RentItems", allItems, new MemoryCacheEntryOptions() { Priority = CacheItemPriority.NeverRemove });
-            _cache.Set("CustomerData",new Dictionary<long, List<CustomerInfo>>(), new MemoryCacheEntryOptions() { Priority = CacheItemPriority.NeverRemove });
+            _cache.Set("CustomerData",new Dictionary<long, List<CustomerRentInfo>>(), new MemoryCacheEntryOptions() { Priority = CacheItemPriority.NeverRemove });
         }
 
         public List<Invoice> GetInvoice(long customerId)
         {
             List<Invoice> customerInvoice = new List<Invoice>();
 
-            var customerData = new Dictionary<long, List<CustomerInfo>>();
+            var customerData = new Dictionary<long, List<CustomerRentInfo>>();
             if (_cache.TryGetValue("CustomerData", out customerData))
             {
-                customerInvoice.AddRange(customerData[customerId].Select(e => new Invoice() { Points = e.CustomerPoints, ProductType = e.CustomerRentedProduct, Price = e.CustomerPaidMoney }).ToList());
+                customerInvoice.AddRange(customerData[customerId].Select(e => new Invoice() { Points = e.CustomerPoints, ProductType = e.CustomerRentedProduct, Price = e.CustomerPaidMoney, Name = e.Name }).ToList());
             }
 
             return customerInvoice;
@@ -53,21 +50,26 @@ namespace Bondora.BLL.Models
         }
 
 
-        public void AddRent(long custumerId, CustomerInfo rentedData)
+        public bool AddRent(long custumerId, CustomerRentInfo rentedData)
         {
-            var customerData = new Dictionary<long, List<CustomerInfo>>();
+            bool IsAdded = false;
+            var customerData = new Dictionary<long, List<CustomerRentInfo>>();
 
             if (_cache.TryGetValue("CustomerData", out customerData))
             {
                 if (customerData.ContainsKey(custumerId))
                 {
                     customerData[custumerId].Add(rentedData);
+                    IsAdded = true;
                 }
                 else
                 {
-                    customerData.Add(custumerId, new List<CustomerInfo>() { rentedData });
+                    customerData.Add(custumerId, new List<CustomerRentInfo>() { rentedData });
+                    IsAdded = true;
                 }
             }
+
+            return IsAdded;
         }
     }
 }

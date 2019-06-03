@@ -20,7 +20,7 @@ namespace Bondora.Web
                 .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                 .Enrich.FromLogContext()
-                .WriteTo.RollingFile(Path.Combine("C://Temp//BetonGames//SiteMvc", "Log-{Date}.txt"), Serilog.Events.LogEventLevel.Error)
+                .WriteTo.RollingFile(Path.Combine("C://Temp//Bondora//SiteMvc", "Log-{Date}.txt"), Serilog.Events.LogEventLevel.Error)
                 .CreateLogger();
 
             CreateWebHostBuilder(args).Build().Run();

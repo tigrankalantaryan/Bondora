@@ -17,9 +17,9 @@ namespace Bondora.BLL.Services
             cacheMemoryService = _cacheMemoryService;
         }
 
-        public void AddRent(long custumerId, CustomerInfo rentedData)
+        public bool AddRent(long customerId, CustomerRentInfo rentedData)
         {
-            cacheMemoryService.AddRent(custumerId, rentedData);
+          return  cacheMemoryService.AddRent(customerId, rentedData);
         }
 
         public List<Invoice> GetInvoice(long customerId)

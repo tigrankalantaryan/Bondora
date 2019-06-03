@@ -1,9 +1,5 @@
-﻿using Bondora.BLL.Models;
-using Bondora.Models;
-using System;
+﻿using Bondora.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Bondora.BLL.Services
 {
@@ -13,6 +9,6 @@ namespace Bondora.BLL.Services
 
         List<RentItems> GetProducts();
 
-        void AddRent(long custumerId, CustomerInfo rentedData);
+        bool AddRent(long costumerId, CustomerRentInfo rentedData);
     }
 }

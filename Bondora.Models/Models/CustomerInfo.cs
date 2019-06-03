@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace Bondora.Models
 {
-    public class CustomerInfo
+    public class CustomerRentInfo
     {
+        public string Name { get; set; }
+
         public short CustomerPoints { get; set; }
 
         public string CustomerPCType { get; set; }

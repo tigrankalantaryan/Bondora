@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bondora.BLL", "Bondora.BLL\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bondora.Models", "Bondora.Models\Bondora.Models.csproj", "{38DB05BA-CCCD-4360-870B-494C8B434C17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bondora.UnitTest", "Bondora.UnitTest\Bondora.UnitTest.csproj", "{B216C574-361E-4785-827B-ADC13A6A53F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bondora.Test", "Bondora.Test\Bondora.Test.csproj", "{004600E5-AA14-4344-9A6B-AE5DEA96AD44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{38DB05BA-CCCD-4360-870B-494C8B434C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38DB05BA-CCCD-4360-870B-494C8B434C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38DB05BA-CCCD-4360-870B-494C8B434C17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B216C574-361E-4785-827B-ADC13A6A53F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B216C574-361E-4785-827B-ADC13A6A53F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B216C574-361E-4785-827B-ADC13A6A53F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B216C574-361E-4785-827B-ADC13A6A53F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{004600E5-AA14-4344-9A6B-AE5DEA96AD44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{004600E5-AA14-4344-9A6B-AE5DEA96AD44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{004600E5-AA14-4344-9A6B-AE5DEA96AD44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{004600E5-AA14-4344-9A6B-AE5DEA96AD44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

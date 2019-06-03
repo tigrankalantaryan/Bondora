@@ -31,6 +31,7 @@ namespace Bondora.Web
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddHttpClient();
+            services.Configure<Urls>(Configuration.GetSection("Urls"));
             services.AddSingleton<WebRequest>();
         }
 
@@ -55,7 +56,7 @@ namespace Bondora.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Customer}/{action=StartAndGetProductcs}/{id?}");
+                    template: "{controller=Customer}/{action=StartAndGetProductcs}");
             });
         }
     }

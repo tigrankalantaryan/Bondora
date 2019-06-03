@@ -3,22 +3,22 @@ using Bondora.Models.Models;
 using Bondora.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Serilog;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Bondora.Web.Controllers
 {
+
     public class CustomerController : Controller
     {
         private static ILogger<CustomerController> logger;
+        private static Urls urls;
 
-        public CustomerController(ILogger<CustomerController> _logger)
+        public CustomerController(ILogger<CustomerController> _logger, IOptions<Urls> _urls)
         {
+            urls = _urls.Value;
             logger = _logger;
         }
 
@@ -26,12 +26,11 @@ namespace Bondora.Web.Controllers
         {
             try
             {
-                var url = "http://localhost:12689/api/bondora/getproduct";
-                var productsJson = WebRequest.SendWebRequest(url, "GET", null);
+                var productsJson = WebRequest.SendWebRequest(urls.GetProducts, "GET", null);
                 if (productsJson != null)
                 {
                     var products = JsonConvert.DeserializeObject<List<RentItems>>(productsJson);
-                    return Ok(products);
+                    return View(products);
                 }
             }
             catch (Exception ex)
@@ -42,17 +41,17 @@ namespace Bondora.Web.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult GetInvoice()
         {
             try
             {
                 long customerId = 1;
-                var url = "http://localhost:12689/api/bondora/getinvoice";
-                var invoiceJson = WebRequest.SendWebRequest(url, "POST", customerId.ToString());
+                var invoiceJson = WebRequest.SendWebRequest(urls.GetInvoice, "POST", customerId.ToString());
                 if (invoiceJson != null)
                 {
-                    var invoice = JsonConvert.DeserializeObject<Invoice>(invoiceJson);
-                    return Ok(invoice);
+                    var invoice = JsonConvert.DeserializeObject<List<Invoice>>(invoiceJson);
+                    return View(invoice);
                 }
 
             }
@@ -64,8 +63,8 @@ namespace Bondora.Web.Controllers
             return BadRequest();
         }
 
-
-        public IActionResult AddRent([FromBody]CustomerInfo data)
+        [HttpPost]
+        public IActionResult AddRent([FromBody]CustomerRentInfo data)
         {
             if (!ModelState.IsValid)
             {
@@ -81,8 +80,7 @@ namespace Bondora.Web.Controllers
                 }
 
                 Helpers.CalculateRent(data);
-                var url = "http://localhost:12689/api/bondora/addrent";
-                WebRequest.SendWebRequest(url, "POST", JsonConvert.SerializeObject(new { customerId, RentedData = data }));
+                WebRequest.SendWebRequest(urls.AddRent, "POST", JsonConvert.SerializeObject(new { customerId, RentedData = data }));
                 return Ok();
             }
             catch (Exception ex)

@@ -1,0 +1,39 @@
+﻿
+@model IEnumerable<Bondora.Models.Invoice>;
+@{
+    ViewData["Title"] = "GetInvoice";
+}
+
+<h2>GetInvoice</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Type</th>
+            <th>Point</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr >
+                <td data-td="name">@item.Name</td>
+                <td data-td="price">@item.Price</td>
+                <td data-td="type">@item.ProductType</td>
+                <td data-td="points">@item.Points</td>
+            </tr>
+        }
+    </tbody>
+    @{ 
+        var totalPoints = Model.Sum(x => x.Points);
+        var totalPrice = Model.Sum(x => x.Price);
+    }
+        
+    <div>Total Points: @totalPoints</div>
+    <div>Total Price: @totalPrice</div>
+
+</table>
+
+<div style="position:absolute;top:16px;right:16px;cursor:pointer" onclick="this.parentNode.remove()">X</div>
